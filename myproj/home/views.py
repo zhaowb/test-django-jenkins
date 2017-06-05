@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from .forms import MyRegistrationForm
 from django.contrib.auth.models import Group
 
@@ -21,6 +22,7 @@ def login(request):
         return redirect('/')
     return render(request, 'login.html', {'error':'invalid username or password'})
 
+@login_required(login_url='/home/login')
 def logout(request):
     if request.user.is_authenticated:
         auth.logout(request)
